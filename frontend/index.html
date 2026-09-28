@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CropAdvisor | Smart Farmer Support</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="auth-page">
+
+        <!-- LEFT SIDE -->
+        <section class="auth-visual">
+
+            <div class="brand">
+                <div class="brand-icon">🌱</div>
+
+                <div>
+                    <h1>CropAdvisor</h1>
+                    <p>Smart Farmer Support Hub</p>
+                </div>
+            </div>
+
+
+            <div class="visual-content">
+
+                <span class="eyebrow">
+                    🌾 DIGITAL AGRICULTURE PLATFORM
+                </span>
+
+                <h2>
+                    Smarter support for
+                    <span>healthier crops.</span>
+                </h2>
+
+                <p>
+                    Connect with agricultural officers, raise crop
+                    disease tickets, receive expert recommendations,
+                    and track your support requests in one place.
+                </p>
+
+
+                <div class="feature-list">
+
+                    <div class="feature">
+                        <div class="feature-icon">🎫</div>
+
+                        <div>
+                            <h3>Smart Ticketing</h3>
+                            <p>Report crop problems quickly and easily.</p>
+                        </div>
+                    </div>
+
+
+                    <div class="feature">
+                        <div class="feature-icon">📍</div>
+
+                        <div>
+                            <h3>Regional Assignment</h3>
+                            <p>Tickets are automatically routed to the appropriate officer.</p>
+                        </div>
+                    </div>
+
+
+                    <div class="feature">
+                        <div class="feature-icon">🌿</div>
+
+                        <div>
+                            <h3>Expert Recommendations</h3>
+                            <p>Receive guidance from agricultural support officers.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="visual-footer">
+                <span>Crop Disease Advisory System</span>
+                <span>•</span>
+                <span>Smart Agriculture</span>
+            </div>
+
+        </section>
+
+
+        <!-- RIGHT SIDE -->
+        <section class="auth-panel">
+
+            <div class="auth-container">
+
+                <!-- MOBILE BRAND -->
+                <div class="mobile-brand">
+
+                    <div class="brand-icon">🌱</div>
+
+                    <div>
+                        <h1>CropAdvisor</h1>
+                        <p>Farmer Support Hub</p>
+                    </div>
+
+                </div>
+
+
+                <!-- AUTH CARD -->
+                <div class="auth-card">
+
+                    <!-- ROLE SELECTOR -->
+                    <div class="role-selector">
+
+                        <button
+                            type="button"
+                            class="role-btn active"
+                            id="farmerRoleBtn"
+                            onclick="selectRole('FARMER')"
+                        >
+                            <span>👨‍🌾</span>
+                            Farmer
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="role-btn"
+                            id="officerRoleBtn"
+                            onclick="selectRole('OFFICER')"
+                        >
+                            <span>👨‍💼</span>
+                            Officer
+                        </button>
+
+                    </div>
+
+
+                    <!-- AUTH TABS -->
+                    <div class="auth-tabs">
+
+                        <button
+                            type="button"
+                            id="loginTab"
+                            class="auth-tab active"
+                            onclick="showLogin()"
+                        >
+                            Sign In
+                        </button>
+
+
+                        <button
+                            type="button"
+                            id="registerTab"
+                            class="auth-tab"
+                            onclick="showRegister()"
+                        >
+                            Create Account
+                        </button>
+
+                    </div>
+
+
+                    <!-- LOGIN -->
+                    <div id="loginSection">
+
+                        <div class="auth-heading">
+
+                            <span class="section-label">
+                                WELCOME BACK
+                            </span>
+
+                            <h2 id="loginTitle">
+                                Sign in as Farmer
+                            </h2>
+
+                            <p>
+                                Access your CropAdvisor support dashboard.
+                            </p>
+
+                        </div>
+
+
+                        <form id="loginForm">
+
+                            <div class="form-group">
+
+                                <label for="loginUsername">
+                                    Username
+                                </label>
+
+                                <div class="input-wrapper">
+                                    <span>👤</span>
+
+                                    <input
+                                        type="text"
+                                        id="loginUsername"
+                                        placeholder="Enter your username"
+                                        autocomplete="username"
+                                        required
+                                    >
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="loginPassword">
+                                    Password
+                                </label>
+
+                                <div class="input-wrapper">
+
+                                    <span>🔒</span>
+
+                                    <input
+                                        type="password"
+                                        id="loginPassword"
+                                        placeholder="Enter your password"
+                                        autocomplete="current-password"
+                                        required
+                                    >
+
+                                    <button
+                                        type="button"
+                                        class="password-toggle"
+                                        onclick="togglePassword('loginPassword', this)"
+                                    >
+                                        👁
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                id="loginMessage"
+                                class="form-message"
+                            ></div>
+
+
+                            <button
+                                type="submit"
+                                class="submit-btn"
+                            >
+                                <span>Sign In</span>
+                                <span>→</span>
+                            </button>
+
+                        </form>
+
+
+                        <p class="switch-text">
+                            Don't have an account?
+                            <button
+                                type="button"
+                                onclick="showRegister()"
+                            >
+                                Create one
+                            </button>
+                        </p>
+
+                    </div>
+
+
+                    <!-- REGISTER -->
+                    <div
+                        id="registerSection"
+                        class="hidden"
+                    >
+
+                        <div class="auth-heading">
+
+                            <span class="section-label">
+                                GET STARTED
+                            </span>
+
+                            <h2 id="registerTitle">
+                                Create Farmer Account
+                            </h2>
+
+                            <p>
+                                Join CropAdvisor and manage your crop support requests.
+                            </p>
+
+                        </div>
+
+
+                        <form id="registerForm">
+
+                            <div class="form-row">
+
+                                <div class="form-group">
+
+                                    <label for="registerName">
+                                        Full Name
+                                    </label>
+
+                                    <div class="input-wrapper">
+
+                                        <span>👤</span>
+
+                                        <input
+                                            type="text"
+                                            id="registerName"
+                                            placeholder="Your name"
+                                            required
+                                        >
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label for="registerPhone">
+                                        Phone
+                                    </label>
+
+                                    <div class="input-wrapper">
+
+                                        <span>📱</span>
+
+                                        <input
+                                            type="tel"
+                                            id="registerPhone"
+                                            placeholder="Phone number"
+                                            required
+                                        >
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="registerEmail">
+                                    Email
+                                </label>
+
+                                <div class="input-wrapper">
+
+                                    <span>✉️</span>
+
+                                    <input
+                                        type="email"
+                                        id="registerEmail"
+                                        placeholder="you@example.com"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="registerUsername">
+                                    Username
+                                </label>
+
+                                <div class="input-wrapper">
+
+                                    <span>🪪</span>
+
+                                    <input
+                                        type="text"
+                                        id="registerUsername"
+                                        placeholder="Choose a username"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-row">
+
+                                <div class="form-group">
+
+                                    <label for="registerPassword">
+                                        Password
+                                    </label>
+
+                                    <div class="input-wrapper">
+
+                                        <span>🔒</span>
+
+                                        <input
+                                            type="password"
+                                            id="registerPassword"
+                                            placeholder="Create password"
+                                            required
+                                        >
+
+                                        <button
+                                            type="button"
+                                            class="password-toggle"
+                                            onclick="togglePassword('registerPassword', this)"
+                                        >
+                                            👁
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label for="registerRegion">
+                                        Region
+                                    </label>
+
+                                    <div class="input-wrapper">
+
+                                        <span>📍</span>
+
+                                        <select
+                                            id="registerRegion"
+                                            required
+                                        >
+                                            <option value="">
+                                                Select region
+                                            </option>
+                                        </select>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                id="registerMessage"
+                                class="form-message"
+                            ></div>
+
+
+                            <button
+                                type="submit"
+                                class="submit-btn"
+                            >
+                                <span>Create Account</span>
+                                <span>→</span>
+                            </button>
+
+                        </form>
+
+
+                        <p class="switch-text">
+                            Already have an account?
+                            <button
+                                type="button"
+                                onclick="showLogin()"
+                            >
+                                Sign in
+                            </button>
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="security-note">
+                    🔐 Your account information is securely managed by CropAdvisor.
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

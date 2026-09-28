@@ -1,0 +1,2909 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CropAdvisor | Dashboard</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2f7d4a;
+            --primary-dark: #225f38;
+            --primary-soft: #eaf5ed;
+
+            --dark: #10251a;
+            --dark-2: #183c27;
+
+            --text: #17231c;
+            --muted: #748078;
+
+            --background: #f5f8f6;
+            --white: #ffffff;
+
+            --border: #e2e9e4;
+
+            --blue: #477399;
+            --blue-soft: #eaf2f8;
+
+            --orange: #c67b25;
+            --orange-soft: #fff2df;
+
+            --red: #b84a43;
+            --red-soft: #fdebea;
+
+            --shadow: 0 8px 30px rgba(16, 37, 26, 0.06);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        /* =====================================================
+           APP
+        ===================================================== */
+
+        .app {
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+            width: 255px;
+            min-height: 100vh;
+
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+
+            background: var(--dark);
+            color: white;
+
+            padding: 25px 17px;
+
+            display: flex;
+            flex-direction: column;
+
+            z-index: 20;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+
+            padding: 5px 10px 32px;
+        }
+
+        .brand-icon {
+            width: 43px;
+            height: 43px;
+
+            border-radius: 13px;
+
+            background: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 21px;
+        }
+
+        .brand h2 {
+            font-size: 18px;
+            letter-spacing: -0.4px;
+        }
+
+        .brand p {
+            color: #8fa397;
+            font-size: 10px;
+            margin-top: 3px;
+        }
+
+        .nav-label {
+            color: #65796d;
+
+            font-size: 9px;
+            font-weight: 700;
+
+            letter-spacing: 1.5px;
+
+            padding: 0 13px 9px;
+        }
+
+        .navigation {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .nav-item {
+            width: 100%;
+
+            border: none;
+            background: transparent;
+
+            color: #9eafa5;
+
+            border-radius: 10px;
+
+            padding: 12px 13px;
+
+            text-align: left;
+
+            display: flex;
+            align-items: center;
+            gap: 11px;
+
+            font-size: 12px;
+
+            transition: 0.2s;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: #1d3a28;
+            color: white;
+        }
+
+        .nav-icon {
+            width: 21px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+
+            border-top: 1px solid #294034;
+
+            padding: 17px 10px 4px;
+        }
+
+        .sidebar-bottom p {
+            font-size: 11px;
+            color: #c4d0c8;
+        }
+
+        .sidebar-bottom span {
+            display: block;
+
+            color: #6f8577;
+
+            font-size: 9px;
+
+            margin-top: 4px;
+        }
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main {
+            margin-left: 255px;
+
+            width: calc(100% - 255px);
+
+            min-height: 100vh;
+
+            padding: 28px 35px;
+        }
+
+        /* =====================================================
+           TOPBAR
+        ===================================================== */
+
+        .topbar {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 27px;
+        }
+
+        .welcome {
+            color: var(--muted);
+
+            font-size: 11px;
+
+            margin-bottom: 4px;
+        }
+
+        .topbar h1 {
+            font-size: 27px;
+
+            letter-spacing: -0.8px;
+        }
+
+        .profile-mini {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .profile-mini-info {
+            text-align: right;
+        }
+
+        .profile-mini-name {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .profile-mini-role {
+            color: var(--muted);
+            font-size: 10px;
+            margin-top: 2px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+
+            border-radius: 12px;
+
+            background: var(--primary-soft);
+
+            color: var(--primary);
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .logout-btn {
+            border: 1px solid var(--border);
+
+            background: white;
+
+            color: #65716a;
+
+            border-radius: 9px;
+
+            padding: 9px 12px;
+
+            font-size: 10px;
+
+            margin-left: 5px;
+
+            transition: 0.2s;
+        }
+
+        .logout-btn:hover {
+            color: var(--red);
+            border-color: #e4c9c7;
+            background: #fffafa;
+        }
+
+        /* =====================================================
+           PAGE SECTIONS
+        ===================================================== */
+
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+            background:
+                linear-gradient(
+                    120deg,
+                    #183c27,
+                    #2f7d4a
+                );
+
+            border-radius: 18px;
+
+            padding: 28px 30px;
+
+            color: white;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+
+            overflow: hidden;
+
+            position: relative;
+        }
+
+        .hero::after {
+            content: "🌾";
+
+            position: absolute;
+
+            right: 30px;
+            bottom: -18px;
+
+            font-size: 115px;
+
+            opacity: 0.1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-label {
+            color: #b9ddc1;
+
+            font-size: 9px;
+            font-weight: 800;
+
+            letter-spacing: 1.5px;
+
+            margin-bottom: 8px;
+        }
+
+        .hero h2 {
+            font-size: 23px;
+
+            margin-bottom: 7px;
+
+            letter-spacing: -0.5px;
+        }
+
+        .hero p {
+            color: #c6dfcc;
+
+            font-size: 11px;
+
+            line-height: 1.6;
+
+            max-width: 550px;
+        }
+
+        .hero-button {
+            position: relative;
+            z-index: 3;
+
+            border: none;
+
+            background: white;
+
+            color: var(--primary-dark);
+
+            border-radius: 9px;
+
+            padding: 12px 17px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+        .hero-button:hover {
+            transform: translateY(-1px);
+        }
+
+        /* =====================================================
+           STATS
+        ===================================================== */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 14px;
+
+            padding: 17px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            box-shadow: var(--shadow);
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+
+            border-radius: 11px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 17px;
+        }
+
+        .green {
+            background: var(--primary-soft);
+        }
+
+        .blue {
+            background: var(--blue-soft);
+        }
+
+        .orange {
+            background: var(--orange-soft);
+        }
+
+        .red {
+            background: var(--red-soft);
+        }
+
+        .stat p {
+            color: var(--muted);
+
+            font-size: 10px;
+
+            margin-bottom: 3px;
+        }
+
+        .stat h3 {
+            font-size: 21px;
+        }
+
+        /* =====================================================
+           CONTENT GRID
+        ===================================================== */
+
+        .content-grid {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.65fr)
+                minmax(280px, 0.85fr);
+
+            gap: 18px;
+        }
+
+        .card {
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 16px;
+
+            padding: 20px;
+
+            box-shadow: var(--shadow);
+        }
+
+        .card-header {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 17px;
+        }
+
+        .label {
+            color: var(--primary);
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.3px;
+
+            margin-bottom: 4px;
+        }
+
+        .card-header h2 {
+            font-size: 17px;
+        }
+
+        .view-btn {
+            border: none;
+
+            background: transparent;
+
+            color: var(--primary);
+
+            font-size: 10px;
+
+            font-weight: 700;
+        }
+
+        /* =====================================================
+           TICKETS
+        ===================================================== */
+
+        .ticket-list {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 9px;
+        }
+
+        .ticket {
+            border: 1px solid var(--border);
+
+            border-radius: 11px;
+
+            padding: 13px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            transition: 0.15s;
+        }
+
+        .ticket:hover {
+            border-color: #b9cdbf;
+
+            transform: translateY(-1px);
+
+            box-shadow: 0 5px 15px rgba(16, 37, 26, 0.05);
+        }
+
+        .ticket-main {
+            min-width: 0;
+        }
+
+        .ticket-title {
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            margin-bottom: 5px;
+        }
+
+        .ticket-title strong {
+            font-size: 12px;
+        }
+
+        .ticket-id {
+            color: #9aa49e;
+
+            font-size: 9px;
+        }
+
+        .ticket-details {
+            color: var(--muted);
+
+            font-size: 10px;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+        }
+
+        .ticket-right {
+            text-align: right;
+
+            flex-shrink: 0;
+        }
+
+        .status {
+            display: inline-block;
+
+            padding: 5px 8px;
+
+            border-radius: 20px;
+
+            font-size: 8px;
+
+            font-weight: 800;
+        }
+
+        .status.OPEN {
+            background: var(--primary-soft);
+            color: var(--primary);
+        }
+
+        .status.REOPENED {
+            background: var(--orange-soft);
+            color: var(--orange);
+        }
+
+        .status.CLOSED {
+            background: var(--blue-soft);
+            color: var(--blue);
+        }
+
+        .status.ESCALATED {
+            background: var(--red-soft);
+            color: var(--red);
+        }
+
+        .status.IN_PROGRESS {
+            background: #eeeafa;
+            color: #6857a0;
+        }
+
+        .date {
+            color: #9aa49e;
+
+            font-size: 8px;
+
+            margin-top: 5px;
+        }
+
+        /* =====================================================
+           QUICK ACTIONS
+        ===================================================== */
+
+        .actions {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 9px;
+
+            margin-bottom: 18px;
+        }
+
+        .action {
+            border: 1px solid var(--border);
+
+            background: #fafcfb;
+
+            border-radius: 10px;
+
+            padding: 13px;
+
+            text-align: left;
+
+            font-size: 10px;
+
+            color: #435149;
+
+            transition: 0.2s;
+        }
+
+        .action:hover {
+            border-color: #bdd2c3;
+
+            background: var(--primary-soft);
+
+            transform: translateY(-1px);
+        }
+
+        .action-icon {
+            font-size: 16px;
+
+            display: block;
+
+            margin-bottom: 7px;
+        }
+
+        .info {
+            background: #f1f7f3;
+
+            border-radius: 11px;
+
+            padding: 14px;
+        }
+
+        .info strong {
+            font-size: 11px;
+
+            display: block;
+
+            margin-bottom: 5px;
+        }
+
+        .info p {
+            color: var(--muted);
+
+            font-size: 9px;
+
+            line-height: 1.6;
+        }
+
+        /* =====================================================
+           PROFILE PAGE
+        ===================================================== */
+
+        .profile-page-header {
+            margin-bottom: 20px;
+        }
+
+        .profile-page-header .label {
+            margin-bottom: 5px;
+        }
+
+        .profile-page-header h2 {
+            font-size: 24px;
+            letter-spacing: -0.5px;
+        }
+
+        .profile-page-header p {
+            color: var(--muted);
+            font-size: 11px;
+            margin-top: 5px;
+        }
+
+        .profile-layout {
+            display: grid;
+
+            grid-template-columns:
+                0.8fr 1.4fr;
+
+            gap: 18px;
+        }
+
+        .profile-card {
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 18px;
+
+            padding: 28px;
+
+            box-shadow: var(--shadow);
+
+            text-align: center;
+        }
+
+        .large-avatar {
+            width: 82px;
+            height: 82px;
+
+            border-radius: 24px;
+
+            background: var(--primary-soft);
+
+            color: var(--primary);
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            margin: 0 auto 15px;
+
+            font-size: 31px;
+
+            font-weight: 700;
+        }
+
+        .profile-card h2 {
+            font-size: 20px;
+        }
+
+        .profile-card .username {
+            color: var(--muted);
+
+            font-size: 11px;
+
+            margin-top: 5px;
+        }
+
+        .role-badge {
+            display: inline-block;
+
+            margin-top: 13px;
+
+            padding: 7px 13px;
+
+            border-radius: 30px;
+
+            background: var(--primary-soft);
+
+            color: var(--primary);
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.5px;
+        }
+
+        .profile-info-card {
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 18px;
+
+            padding: 24px;
+
+            box-shadow: var(--shadow);
+        }
+
+        .profile-info-card h3 {
+            font-size: 16px;
+
+            margin-bottom: 18px;
+        }
+
+        .detail-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 13px;
+        }
+
+        .detail {
+            background: #f8faf9;
+
+            border: 1px solid #edf1ee;
+
+            border-radius: 11px;
+
+            padding: 14px;
+        }
+
+        .detail-label {
+            color: var(--muted);
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.7px;
+
+            margin-bottom: 6px;
+        }
+
+        .detail-value {
+            font-size: 12px;
+
+            font-weight: 600;
+
+            word-break: break-word;
+        }
+
+        .profile-note {
+            margin-top: 18px;
+
+            padding: 15px;
+
+            background: var(--primary-soft);
+
+            border-radius: 11px;
+        }
+
+        .profile-note strong {
+            display: block;
+
+            font-size: 11px;
+
+            margin-bottom: 4px;
+        }
+
+        .profile-note p {
+            color: var(--muted);
+
+            font-size: 9px;
+
+            line-height: 1.6;
+        }
+
+        /* =====================================================
+           ALL TICKETS PAGE
+        ===================================================== */
+
+        .tickets-page-header {
+            margin-bottom: 20px;
+        }
+
+        .tickets-page-header h2 {
+            font-size: 24px;
+        }
+
+        .tickets-page-header p {
+            color: var(--muted);
+
+            font-size: 11px;
+
+            margin-top: 5px;
+        }
+
+        .tickets-full-card {
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 16px;
+
+            padding: 20px;
+
+            box-shadow: var(--shadow);
+        }
+
+        /* =====================================================
+           MODAL
+        ===================================================== */
+
+        .modal {
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            background: rgba(9, 24, 15, 0.55);
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            z-index: 100;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-card {
+            width: 100%;
+
+            max-width: 480px;
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 24px;
+
+            box-shadow:
+                0 25px 70px rgba(0, 0, 0, 0.22);
+        }
+
+        .modal-header {
+            display: flex;
+
+            align-items: flex-start;
+
+            justify-content: space-between;
+
+            margin-bottom: 19px;
+        }
+
+        .modal-header h2 {
+            font-size: 19px;
+        }
+
+        .close {
+            border: none;
+
+            background: #f1f4f2;
+
+            width: 31px;
+            height: 31px;
+
+            border-radius: 50%;
+
+            font-size: 19px;
+
+            color: #66736b;
+        }
+
+        .form-group {
+            margin-bottom: 13px;
+        }
+
+        .form-group label {
+            display: block;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            margin-bottom: 6px;
+
+            color: #4e5b53;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+
+            border: 1px solid var(--border);
+
+            border-radius: 9px;
+
+            padding: 10px 11px;
+
+            font-size: 11px;
+
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+        }
+
+        .form-group textarea {
+            min-height: 85px;
+
+            resize: vertical;
+        }
+
+        .primary {
+            width: 100%;
+
+            border: none;
+
+            background: var(--primary);
+
+            color: white;
+
+            border-radius: 9px;
+
+            padding: 12px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+        .primary:hover {
+            background: var(--primary-dark);
+        }
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        .toast {
+            position: fixed;
+
+            right: 25px;
+            bottom: 25px;
+
+            background: var(--dark);
+
+            color: white;
+
+            padding: 13px 18px;
+
+            border-radius: 10px;
+
+            font-size: 11px;
+
+            box-shadow: 0 10px 35px rgba(0,0,0,0.18);
+
+            opacity: 0;
+
+            transform: translateY(15px);
+
+            pointer-events: none;
+
+            transition: 0.25s;
+
+            z-index: 200;
+        }
+
+        .toast.show {
+            opacity: 1;
+
+            transform: translateY(0);
+        }
+
+        /* =====================================================
+           EMPTY
+        ===================================================== */
+
+        .empty {
+            text-align: center;
+
+            color: var(--muted);
+
+            padding: 35px 15px;
+
+            font-size: 11px;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1050px) {
+
+            .stats {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .content-grid,
+            .profile-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 750px) {
+
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+
+                width: 100%;
+
+                padding: 20px 15px;
+            }
+
+            .hero {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 17px;
+            }
+
+            .topbar {
+                align-items: flex-start;
+
+                gap: 12px;
+
+                flex-direction: column;
+            }
+
+            .profile-mini {
+                align-self: stretch;
+
+                justify-content: flex-end;
+            }
+
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-mini-info {
+                display: none;
+            }
+
+            .hero h2 {
+                font-size: 20px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🌱
+            </div>
+
+            <div>
+
+                <h2>CropAdvisor</h2>
+
+                <p>
+                    Smart Farmer Support Hub
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="nav-label">
+            WORKSPACE
+        </div>
+
+
+        <nav class="navigation">
+
+
+            <button
+                class="nav-item active"
+                id="dashboardNav"
+                onclick="showPage('dashboard')"
+            >
+
+                <span class="nav-icon">
+                    📊
+                </span>
+
+                Dashboard
+
+            </button>
+
+
+            <button
+                class="nav-item"
+                id="ticketsNav"
+                onclick="showPage('tickets')"
+            >
+
+                <span class="nav-icon">
+                    🎫
+                </span>
+
+                My Tickets
+
+            </button>
+
+
+            <button
+                class="nav-item"
+                id="createTicketNav"
+                onclick="openTicketModal()"
+            >
+
+                <span class="nav-icon">
+                    ＋
+                </span>
+
+                New Ticket
+
+            </button>
+
+
+            <button
+                class="nav-item"
+                id="profileNav"
+                onclick="showPage('profile')"
+            >
+
+                <span class="nav-icon">
+                    👤
+                </span>
+
+                My Profile
+
+            </button>
+
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <p>
+                Crop Disease Advisory System
+            </p>
+
+            <span>
+                Smart Agriculture Platform
+            </span>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="main">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <p class="welcome">
+                    Good day 👋
+                </p>
+
+                <h1 id="pageTitle">
+                    Dashboard
+                </h1>
+
+            </div>
+
+
+            <div class="profile-mini">
+
+                <div class="profile-mini-info">
+
+                    <div
+                        class="profile-mini-name"
+                        id="userName"
+                    >
+                        User
+                    </div>
+
+                    <div
+                        class="profile-mini-role"
+                        id="userRole"
+                    >
+                        Farmer
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="avatar"
+                    id="userAvatar"
+                >
+                    U
+                </div>
+
+
+                <button
+                    class="logout-btn"
+                    onclick="logout()"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             DASHBOARD PAGE
+        ================================================== -->
+
+        <section
+            id="dashboardPage"
+            class="page-section active"
+        >
+
+
+            <section class="hero">
+
+                <div class="hero-content">
+
+                    <div class="hero-label">
+                        CROP SUPPORT CENTER
+                    </div>
+
+                    <h2 id="heroTitle">
+                        Welcome to CropAdvisor
+                    </h2>
+
+                    <p id="heroDescription">
+                        Raise crop disease concerns and connect
+                        with agricultural support officers.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="hero-button"
+                    id="heroAction"
+                    onclick="openTicketModal()"
+                >
+                    + Raise a Ticket
+                </button>
+
+            </section>
+
+
+            <!-- STATS -->
+
+            <section class="stats">
+
+
+                <div class="stat">
+
+                    <div class="stat-icon green">
+                        🎫
+                    </div>
+
+                    <div>
+
+                        <p>
+                            Total Tickets
+                        </p>
+
+                        <h3 id="totalTickets">
+                            0
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-icon blue">
+                        🟢
+                    </div>
+
+                    <div>
+
+                        <p>
+                            Active Tickets
+                        </p>
+
+                        <h3 id="activeTickets">
+                            0
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-icon orange">
+                        🔄
+                    </div>
+
+                    <div>
+
+                        <p>
+                            Reopened
+                        </p>
+
+                        <h3 id="reopenedTickets">
+                            0
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-icon red">
+                        ⚠️
+                    </div>
+
+                    <div>
+
+                        <p>
+                            Escalated
+                        </p>
+
+                        <h3 id="escalatedTickets">
+                            0
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- CONTENT -->
+
+            <section class="content-grid">
+
+
+                <div class="card">
+
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <div class="label">
+                                SUPPORT ACTIVITY
+                            </div>
+
+                            <h2>
+                                Recent Tickets
+                            </h2>
+
+                        </div>
+
+
+                        <button
+                            class="view-btn"
+                            onclick="loadDashboard()"
+                        >
+                            Refresh
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="ticketList"
+                        class="ticket-list"
+                    >
+
+                        <div class="empty">
+                            Loading tickets...
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="card">
+
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <div class="label">
+                                QUICK ACTIONS
+                            </div>
+
+                            <h2>
+                                Get Support
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="actions">
+
+
+                        <button
+                            class="action"
+                            onclick="openTicketModal()"
+                            id="quickCreate"
+                        >
+
+                            <span class="action-icon">
+                                🎫
+                            </span>
+
+                            Raise New Ticket
+
+                        </button>
+
+
+                        <button
+                            class="action"
+                            onclick="showPage('tickets')"
+                        >
+
+                            <span class="action-icon">
+                                📋
+                            </span>
+
+                            Track Tickets
+
+                        </button>
+
+
+                        <button
+                            class="action"
+                            onclick="showPage('profile')"
+                        >
+
+                            <span class="action-icon">
+                                👤
+                            </span>
+
+                            View Profile
+
+                        </button>
+
+
+                        <button
+                            class="action"
+                            onclick="loadDashboard()"
+                        >
+
+                            <span class="action-icon">
+                                🔄
+                            </span>
+
+                            Refresh Data
+
+                        </button>
+
+
+                    </div>
+
+
+                    <div class="info">
+
+                        <strong>
+                            🌿 Smart Regional Assignment
+                        </strong>
+
+                        <p>
+                            Your support ticket is automatically
+                            assigned to an agricultural officer
+                            based on your registered region.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+        </section>
+
+
+        <!-- =================================================
+             TICKETS PAGE
+        ================================================== -->
+
+        <section
+            id="ticketsPage"
+            class="page-section"
+        >
+
+
+            <div class="tickets-page-header">
+
+                <div class="label">
+                    SUPPORT ACTIVITY
+                </div>
+
+                <h2>
+                    My Tickets
+                </h2>
+
+                <p>
+                    View and track your crop support requests.
+                </p>
+
+            </div>
+
+
+            <div class="tickets-full-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h2>
+                            Ticket History
+                        </h2>
+
+                    </div>
+
+
+                    <button
+                        class="view-btn"
+                        onclick="loadDashboard()"
+                    >
+                        Refresh
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="allTicketList"
+                    class="ticket-list"
+                >
+
+                    <div class="empty">
+                        Loading tickets...
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             PROFILE PAGE
+        ================================================== -->
+
+        <section
+            id="profilePage"
+            class="page-section"
+        >
+
+
+            <div class="profile-page-header">
+
+                <div class="label">
+                    ACCOUNT
+                </div>
+
+                <h2>
+                    My Profile
+                </h2>
+
+                <p>
+                    View your CropAdvisor account information.
+                </p>
+
+            </div>
+
+
+            <div class="profile-layout">
+
+
+                <!-- PROFILE CARD -->
+
+                <div class="profile-card">
+
+                    <div
+                        class="large-avatar"
+                        id="profileAvatar"
+                    >
+                        U
+                    </div>
+
+
+                    <h2 id="profileName">
+                        User
+                    </h2>
+
+
+                    <div
+                        class="username"
+                        id="profileUsername"
+                    >
+                        @username
+                    </div>
+
+
+                    <div
+                        class="role-badge"
+                        id="profileRole"
+                    >
+                        FARMER
+                    </div>
+
+                </div>
+
+
+                <!-- DETAILS -->
+
+                <div class="profile-info-card">
+
+                    <h3>
+                        Account Information
+                    </h3>
+
+
+                    <div class="detail-grid">
+
+
+                        <div class="detail">
+
+                            <div class="detail-label">
+                                Full Name
+                            </div>
+
+                            <div
+                                class="detail-value"
+                                id="detailName"
+                            >
+                                —
+                            </div>
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <div class="detail-label">
+                                Username
+                            </div>
+
+                            <div
+                                class="detail-value"
+                                id="detailUsername"
+                            >
+                                —
+                            </div>
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <div class="detail-label">
+                                Account Type
+                            </div>
+
+                            <div
+                                class="detail-value"
+                                id="detailRole"
+                            >
+                                —
+                            </div>
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <div class="detail-label">
+                                Account Status
+                            </div>
+
+                            <div class="detail-value">
+                                Active
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="profile-note">
+
+                        <strong>
+                            🌱 CropAdvisor Account
+                        </strong>
+
+                        <p>
+                            Your account allows you to access
+                            crop advisory services and manage
+                            support requests through the
+                            CropAdvisor platform.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     NEW TICKET MODAL
+========================================================== -->
+
+<div
+    class="modal"
+    id="ticketModal"
+>
+
+
+    <div class="modal-card">
+
+
+        <div class="modal-header">
+
+            <div>
+
+                <div class="label">
+                    CROP SUPPORT REQUEST
+                </div>
+
+                <h2>
+                    Raise New Ticket
+                </h2>
+
+            </div>
+
+
+            <button
+                class="close"
+                onclick="closeTicketModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="ticketForm">
+
+
+            <div class="form-group">
+
+                <label>
+                    Crop Name
+                </label>
+
+                <input
+                    type="text"
+                    id="cropName"
+                    placeholder="Example: Tomato"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Symptoms
+                </label>
+
+                <textarea
+                    id="symptoms"
+                    placeholder="Describe the symptoms you noticed..."
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Photo Reference
+                </label>
+
+                <input
+                    type="text"
+                    id="photoReference"
+                    placeholder="Optional photo name/reference"
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="primary"
+            >
+                Submit Support Request
+            </button>
+
+
+        </form>
+
+
+    </div>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div
+    class="toast"
+    id="toast"
+>
+</div>
+
+
+<script>
+
+
+/* =========================================================
+   USER
+========================================================= */
+
+const storedUser =
+    localStorage.getItem("cropAdvisorUser");
+
+
+if (!storedUser) {
+
+    window.location.href = "index.html";
+
+}
+
+
+const currentUser =
+    JSON.parse(storedUser);
+
+
+
+/* =========================================================
+   DISPLAY USER
+========================================================= */
+
+function displayUser() {
+
+    const name =
+        currentUser.name || "User";
+
+    const username =
+        currentUser.username || "username";
+
+    const role =
+        currentUser.role || "FARMER";
+
+
+    document.getElementById("userName")
+        .textContent = name;
+
+
+    document.getElementById("userRole")
+        .textContent =
+            role === "OFFICER"
+                ? "Agricultural Officer"
+                : "Farmer";
+
+
+    document.getElementById("userAvatar")
+        .textContent =
+            name.charAt(0).toUpperCase();
+
+
+    document.getElementById("profileAvatar")
+        .textContent =
+            name.charAt(0).toUpperCase();
+
+
+    document.getElementById("profileName")
+        .textContent = name;
+
+
+    document.getElementById("profileUsername")
+        .textContent = "@" + username;
+
+
+    document.getElementById("profileRole")
+        .textContent = role;
+
+
+    document.getElementById("detailName")
+        .textContent = name;
+
+
+    document.getElementById("detailUsername")
+        .textContent = username;
+
+
+    document.getElementById("detailRole")
+        .textContent =
+            role === "OFFICER"
+                ? "Agricultural Officer"
+                : "Farmer";
+
+
+    if (role === "OFFICER") {
+
+        document.getElementById("heroTitle")
+            .textContent =
+                `Welcome back, ${name}`;
+
+
+        document.getElementById("heroDescription")
+            .textContent =
+                "Review crop support requests and assist farmers in your assigned region.";
+
+
+        document.getElementById("heroAction")
+            .style.display = "none";
+
+
+        document.getElementById("createTicketNav")
+            .style.display = "none";
+
+
+        document.getElementById("quickCreate")
+            .style.display = "none";
+
+    } else {
+
+        document.getElementById("heroTitle")
+            .textContent =
+                `Welcome back, ${name}`;
+
+    }
+
+}
+
+
+
+/* =========================================================
+   PAGE NAVIGATION
+========================================================= */
+
+function showPage(page) {
+
+    const pages = {
+
+        dashboard:
+            document.getElementById(
+                "dashboardPage"
+            ),
+
+        tickets:
+            document.getElementById(
+                "ticketsPage"
+            ),
+
+        profile:
+            document.getElementById(
+                "profilePage"
+            )
+
+    };
+
+
+    Object.values(pages).forEach(
+        section => {
+
+            section.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+
+    pages[page].classList.add(
+        "active"
+    );
+
+
+    document
+        .querySelectorAll(".nav-item")
+        .forEach(item => {
+
+            item.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    if (page === "dashboard") {
+
+        document
+            .getElementById("dashboardNav")
+            .classList.add("active");
+
+        document
+            .getElementById("pageTitle")
+            .textContent =
+                "Dashboard";
+
+    }
+
+
+    if (page === "tickets") {
+
+        document
+            .getElementById("ticketsNav")
+            .classList.add("active");
+
+        document
+            .getElementById("pageTitle")
+            .textContent =
+                "My Tickets";
+
+        loadDashboard();
+
+    }
+
+
+    if (page === "profile") {
+
+        document
+            .getElementById("profileNav")
+            .classList.add("active");
+
+        document
+            .getElementById("pageTitle")
+            .textContent =
+                "My Profile";
+
+    }
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+
+/* =========================================================
+   LOAD DASHBOARD
+========================================================= */
+
+async function loadDashboard() {
+
+    try {
+
+        const response =
+            await fetch(
+                "http://localhost:8080/api/tickets"
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to load tickets"
+            );
+
+        }
+
+
+        const tickets =
+            await response.json();
+
+
+        let visibleTickets;
+
+
+        if (
+            currentUser.role ===
+            "FARMER"
+        ) {
+
+            visibleTickets =
+                tickets.filter(
+                    ticket =>
+                        ticket.farmer &&
+                        ticket.farmer.id ===
+                        currentUser.id
+                );
+
+        } else {
+
+            visibleTickets =
+                tickets.filter(
+                    ticket =>
+                        ticket.officer &&
+                        ticket.officer.id ===
+                        currentUser.id
+                );
+
+        }
+
+
+        updateStatistics(
+            visibleTickets
+        );
+
+
+        displayTickets(
+            visibleTickets,
+            "ticketList"
+        );
+
+
+        displayTickets(
+            visibleTickets,
+            "allTicketList"
+        );
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        const errorHTML = `
+            <div class="empty">
+                Unable to connect to CropAdvisor backend.
+            </div>
+        `;
+
+
+        document.getElementById(
+            "ticketList"
+        ).innerHTML =
+            errorHTML;
+
+
+        document.getElementById(
+            "allTicketList"
+        ).innerHTML =
+            errorHTML;
+
+    }
+
+}
+
+
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+function updateStatistics(tickets) {
+
+    const total =
+        tickets.length;
+
+
+    const active =
+        tickets.filter(
+            ticket =>
+                ticket.status === "OPEN" ||
+                ticket.status === "IN_PROGRESS" ||
+                ticket.status === "REOPENED"
+        ).length;
+
+
+    const reopened =
+        tickets.filter(
+            ticket =>
+                ticket.status === "REOPENED"
+        ).length;
+
+
+    const escalated =
+        tickets.filter(
+            ticket =>
+                ticket.status === "ESCALATED"
+        ).length;
+
+
+    document.getElementById(
+        "totalTickets"
+    ).textContent =
+        total;
+
+
+    document.getElementById(
+        "activeTickets"
+    ).textContent =
+        active;
+
+
+    document.getElementById(
+        "reopenedTickets"
+    ).textContent =
+        reopened;
+
+
+    document.getElementById(
+        "escalatedTickets"
+    ).textContent =
+        escalated;
+
+}
+
+
+
+/* =========================================================
+   DISPLAY TICKETS
+========================================================= */
+
+function displayTickets(
+    tickets,
+    elementId
+) {
+
+    const list =
+        document.getElementById(
+            elementId
+        );
+
+
+    if (!list) {
+        return;
+    }
+
+
+    if (!tickets.length) {
+
+        list.innerHTML = `
+            <div class="empty">
+                ${
+                    currentUser.role ===
+                    "FARMER"
+                    ? "You haven't raised any tickets yet."
+                    : "No tickets are assigned to you."
+                }
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    list.innerHTML = "";
+
+
+    tickets
+        .slice()
+        .reverse()
+        .forEach(ticket => {
+
+
+            const status =
+                ticket.status ||
+                "OPEN";
+
+
+            const farmerName =
+                ticket.farmer?.name ||
+                "Farmer";
+
+
+            const officerName =
+                ticket.officer?.name ||
+                "Officer";
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "ticket";
+
+
+            card.innerHTML = `
+
+                <div class="ticket-main">
+
+                    <div class="ticket-title">
+
+                        <strong>
+                            ${escapeHtml(
+                                ticket.cropName
+                            )}
+                        </strong>
+
+                        <span class="ticket-id">
+                            #${ticket.id}
+                        </span>
+
+                    </div>
+
+
+                    <div class="ticket-details">
+
+                        ${
+                            currentUser.role ===
+                            "FARMER"
+
+                            ? "Officer: " +
+                              escapeHtml(
+                                  officerName
+                              )
+
+                            : "Farmer: " +
+                              escapeHtml(
+                                  farmerName
+                              )
+                        }
+
+                        &nbsp; • &nbsp;
+
+                        ${escapeHtml(
+                            ticket.symptoms
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="ticket-right">
+
+                    <span
+                        class="status ${status}"
+                    >
+                        ${status}
+                    </span>
+
+                    <div class="date">
+
+                        ${
+                            ticket.createdAt
+                            ? formatDate(
+                                ticket.createdAt
+                            )
+                            : ""
+                        }
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            list.appendChild(card);
+
+        });
+
+}
+
+
+
+/* =========================================================
+   NEW TICKET
+========================================================= */
+
+function openTicketModal() {
+
+    if (
+        currentUser.role !==
+        "FARMER"
+    ) {
+
+        showToast(
+            "Only farmers can raise support tickets."
+        );
+
+        return;
+
+    }
+
+
+    document
+        .getElementById("ticketModal")
+        .classList.add("show");
+
+}
+
+
+function closeTicketModal() {
+
+    document
+        .getElementById("ticketModal")
+        .classList.remove("show");
+
+
+    document
+        .getElementById("ticketForm")
+        .reset();
+
+}
+
+
+
+/* =========================================================
+   CREATE TICKET
+========================================================= */
+
+document
+    .getElementById("ticketForm")
+    .addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const cropName =
+                document
+                    .getElementById(
+                        "cropName"
+                    )
+                    .value
+                    .trim();
+
+
+            const symptoms =
+                document
+                    .getElementById(
+                        "symptoms"
+                    )
+                    .value
+                    .trim();
+
+
+            const photoReference =
+                document
+                    .getElementById(
+                        "photoReference"
+                    )
+                    .value
+                    .trim();
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "http://localhost:8080/api/tickets",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    cropName:
+                                        cropName,
+
+                                    symptoms:
+                                        symptoms,
+
+                                    photoReference:
+                                        photoReference,
+
+                                    farmer: {
+                                        id:
+                                            currentUser.id
+                                    }
+
+                                })
+
+                        }
+                    );
+
+
+                const result =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    showToast(
+                        result.error ||
+                        "Unable to create ticket."
+                    );
+
+                    return;
+
+                }
+
+
+                closeTicketModal();
+
+
+                showToast(
+                    `Ticket #${result.id} created successfully.`
+                );
+
+
+                await loadDashboard();
+
+
+            } catch (error) {
+
+                console.error(error);
+
+
+                showToast(
+                    "Unable to connect to CropAdvisor backend."
+                );
+
+            }
+
+        }
+    );
+
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+function logout() {
+
+    localStorage.removeItem(
+        "cropAdvisorUser"
+    );
+
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+
+/* =========================================================
+   TOAST MESSAGE
+========================================================= */
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    setTimeout(() => {
+
+        toast.classList.remove(
+            "show"
+        );
+
+    }, 2800);
+
+}
+
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+function formatDate(
+    dateString
+) {
+
+    const date =
+        new Date(dateString);
+
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
+
+function escapeHtml(value) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
+        return "";
+
+    }
+
+
+    return String(value)
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+displayUser();
+
+loadDashboard();
+
+</script>
+
+
+</body>
+
+</html>
